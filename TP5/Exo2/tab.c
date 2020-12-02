@@ -103,14 +103,14 @@ int deleteElements(Tableau* tab, int startPos, int endPos) {
 			startPos = endPos;
 			endPos = tmp;
 		}
+		else {                                         // allocation reussi changement de la taille
+			tab->size = tab->size - (endPos - startPos + 1);
+		}
 		if (tab->elt == NULL) {              // allocation echoue
 			tab->elt = oldtabelt;
 			return (-1);
 		}
-		else {                                         // allocation reussi changement de la taille
-			tab->size = tab->size - (endPos - startPos + 1);
-		}
-
+		
 		for (int i = startPos - 1; i < endPos; i++) {      // changement du nombre d'elements si element nul
 			if (*(tab->elt + i) != 0) {
 				tab->eltsCount = tab->eltsCount - 1;
