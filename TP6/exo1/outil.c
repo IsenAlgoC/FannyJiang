@@ -30,6 +30,7 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 	{
 		rep->tab[idx] = enr;
 		rep->nb_elts += 1;
+		modif = true;
 	}
 	else {
 		return(ERROR);
@@ -50,14 +51,21 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 
 	}
 	else {
-		//
-		// compléter code ici pour Liste
-		//
-		//
-		//
+		int i = 0;
+		SingleLinkedListElem* tmp = rep->liste->head;
 
+		while (est_sup(tmp->pers,enr) && i < rep->nb_elts) {
+			tmp = tmp->next;
+			i++;
+		}
+
+		if (InsertElementAt(rep->liste, i, enr)) {
+			modif = true;
+			rep->est_trie = true;
+			rep->nb_elts += 1;
+			return(OK);
+		}
 	}
-
 
 #endif
 
@@ -238,17 +246,18 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 							/* tableau, afin de les convertir en majuscules et les comparer */
 	bool trouve = false;
 
+	//pour initialiser tmp_nom
+	strncpy_s(tmp_nom, _countof(tmp_nom), nom, _TRUNCATE);
+		for (int j = 0; j < strlen(tmp_nom); j++) {
+			*(tmp_nom + j) = toupper(*(tmp_nom + j));
+		}
 
 #ifdef IMPL_TAB
 	// ajouter code ici pour tableau
-	strncpy_s(tmp_nom, _countof(tmp_nom), nom, _TRUNCATE);
-	for (int j = 0; j < strlen(tmp_nom); j++) {
-		*(tmp_nom + j) = toupper(*(tmp_nom + j));
-	}
 
 	while ((!trouve) && (i <= ind_fin)) {
 
-		strncpy_s(tmp_nom2, _countof(tmp_nom), rep->tab[i].nom, _TRUNCATE);
+		strncpy_s(tmp_nom2, _countof(tmp_nom2), rep->tab[i].nom, _TRUNCATE);
 
 		for (int k = 0; k < strlen(tmp_nom2); k++) {
 			*(tmp_nom2 + k) = toupper(*(tmp_nom2 + k));
@@ -262,6 +271,20 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
+	SingleLinkedListElem* currentElement = GetElementAt(rep->liste, i);
+	while ((currentElement != NULL) && (!trouve)) {
+
+		strncpy_s(tmp_nom2, _countof(tmp_nom2), currentElement->pers.nom, _TRUNCATE);
+				
+		if (strcmp(tmp_nom, tmp_nom2) == 0) {
+			trouve = true;
+		}
+		else {
+			// si pas trouvé, on passe au suivant
+			currentElement = currentElement->next;
+			i++;
+		}
+	}
 
 #endif
 #endif
@@ -301,23 +324,40 @@ int sauvegarder(Repertoire* rep, char nom_fichier[])
 #ifdef IMPL_TAB
 	// ajouter code ici pour tableau
 	errno_t err;
-	err = fopen_s(&fic_rep, nom_fichier, 'w');
+	err = fopen_s(&fic_rep, nom_fichier, "w");
 	if ((fic_rep == NULL) || err != 0) {
 		return ERROR;
 	}
 	else {
 		for (int i = 0; i < rep->nb_elts; i++) {
 			fprintf(fic_rep, "%s", rep->tab[i].nom);
-			fprintf(fic_rep, "%s", rep->tab[i].prenom);
-			fprintf(fic_rep, "%s\n", rep->tab[i].tel);
+			fprintf(fic_rep, "%-4s %s"," ", rep->tab[i].prenom);
+			fprintf(fic_rep, "%-4s %s\n"," ", rep->tab[i].tel);
 		}
-
-	}
 	fclose(fic_rep);
+	}
+	
 
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
+	errno_t err;
+	err = fopen_s(&fic_rep, nom_fichier, "w");
+	if ((fic_rep == NULL) || err != 0) {
+		return ERROR;
+	}
+	else {
+		SingleLinkedListElem* i = rep->liste->head;
+		int j = 0;
+		while( j < rep->nb_elts ){
+			fprintf(fic_rep, "%s",i->pers.nom);
+			fprintf(fic_rep, "%-4s %s", " ", i->pers.prenom);
+			fprintf(fic_rep, "%-4s %s\n", " ", i->pers.tel);
+			i = i->next;
+			j++;
+		}
+		fclose(fic_rep);
+	}
 #endif
 #endif
 
@@ -374,11 +414,21 @@ int charger(Repertoire* rep, char nom_fichier[])
 #else
 #ifdef IMPL_LIST
 														// ajouter code implemention liste
+				/*SingleLinkedListElem* tmp = GetElementAt(rep->liste ,num_rec);
+
+				if (lire_champ_suivant(buffer, &idx, tmp->pers.nom, MAX_NOM, SEPARATEUR) == OK)
+				{
+					idx++;							
+					if (lire_champ_suivant(buffer, &idx, tmp->pers.prenom, MAX_NOM, SEPARATEUR) == OK)
+					{
+						idx++;
+						if (lire_champ_suivant(buffer, &idx, tmp->pers.tel, MAX_TEL, SEPARATEUR) == OK)
+							num_rec++;		
+					}
+				}
+				tmp = tmp->next;*/
 #endif
 #endif
-
-
-
 
 			}
 
