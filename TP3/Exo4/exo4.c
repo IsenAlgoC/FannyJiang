@@ -3,8 +3,8 @@
 #include<math.h>
 
 int main() {
-	unsigned int MyAdresse_w;
-	printf("Entrer un l'adresse w :");
+	unsigned int MyAdresse_w;         //Entrer une adresse... et verifier qu'elle est comforme 
+	printf("Entrer un l'adresse w :");//à aux condition (code général sans initialisation des valeurs
 	scanf_s("%u", &MyAdresse_w);
 	while (MyAdresse_w > 255 || MyAdresse_w < 0) {
 		printf("/ERROR/\n");

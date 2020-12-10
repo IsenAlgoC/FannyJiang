@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include<stdlib.h>
 
@@ -12,7 +11,7 @@ int main() {
 	printf("\nle nombre %u est codee sur %d bit", a, NbBit);
 
 	for (int i = 0; i < 32; i++) {
-		if (i < 10) {
+		if (i < 10) {				// decale pour pouvoir aligner avec les nombres
 			if ((a & 1) == 1) {
 				printf("\nbit %s%d : ON", " ", i);
 			}
@@ -31,4 +30,7 @@ int main() {
 		a >>= 1;
 	}
 	printf("\nBye!");
+
+	return(EXIT_SUCCESS);
+
 }

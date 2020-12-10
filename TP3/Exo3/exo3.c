@@ -13,7 +13,7 @@ void Initialisation(float tab[]) {
 		tab[i] = -2;
 	}
 }
-//copier un tableau
+//copier un tableau ->  plus simple avec un pointeur (notion vu plus tard)
 void copie_tableau(float tab1[], float tab2[]) {
 	for (int i = 0; i < NBMAXNOTES; i++) {
 		tab2[i] = tab1[i];
@@ -21,12 +21,12 @@ void copie_tableau(float tab1[], float tab2[]) {
 }
 
 int main() {
-	float sum = 0.00;
-	int abs = 0;
-	int i = 0;     //le compteur
-	int present = 0;
-	float note[NBMAXNOTES];
-	char c;
+	float sum = 0.00;		//la somme des notes
+	int abs = 0;			//le nombre d'absent
+	int i = 0;				//le compteur
+	int present = 0;		//le nombre de present
+	float note[NBMAXNOTES]; //le tableau de note
+	char c;					//la valeur entree en cas de valeur non valide
 
 	setlocale(LC_ALL, "fr_FR");
 	Initialisation(note);
@@ -74,10 +74,10 @@ int main() {
 			i++;
 		}
 	}
-	if (present == 0) {
+	if (present == 0) { //cas ou il n'y a personne
 		goto fin;
 	}
-	float moyenne = sum / present;
+	float moyenne = sum / present;        //moyenne des notes optionnel
 	printf("\nLa moyenne de ces %d notes est : %.2f", present, moyenne);
 	printf("\n\nIl y a %d absences", abs);
 
@@ -120,7 +120,7 @@ int main() {
 		}
 	}
 
-	//classement des notes ordre decroissant
+	//classement des notes ordre decroissant ->methode tri à bulle
 	float tab[NBMAXNOTES];
 	copie_tableau(note, tab);
 
