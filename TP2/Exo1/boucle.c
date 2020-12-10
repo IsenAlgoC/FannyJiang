@@ -5,8 +5,8 @@
 int main() {
 
 	//somme des n premier entier
-	int s = 0;
-	int n = 2;
+	int s = 0;	//la somme
+	int n = 2;	//l'indice de la somme
 
 	// for(){}
 	for (n; n < 100; n++) {
@@ -33,11 +33,11 @@ int main() {
 	printf("\nLa somme des 100 premier entier avec la boucle do...while est %d pour n > 1\n", s);
 
 	// Trouver la valeur maximum sans depassement
-	s = 0;
-	n = 2;
-	int d = 65536;// valeur  max n 2 puissance 16 comme codée sur 2 octets 65 536 bits
+	s = 0;			
+	n = 2;			
+	int d = 65536;  // valeur  max n 2 puissance 16 comme codée sur 2 octets 65 536 bits
 
-	while (n <= 1000) {    // 1000 est uen valeur quelconque       
+	while (n <= 1000) {    // 1000 est une valeur quelconque       
 		s = s + n;
 		n = n + 1;
 		if (d - s <= n) {
@@ -49,7 +49,7 @@ int main() {
 	//Demander la valeur de n a l'utilisateur
 	s = 0;
 	n = 2;
-	unsigned short k = 0; // ici mon n vaut k comme je l'avais deja ulitisé
+	unsigned short k = 0; // la valeur demander à l'utilisateur
 
 	printf("\nEntrez la valeur de n : ");
 	scanf_s("%hu", &k);

@@ -27,8 +27,8 @@ int main() {
 	float hauteur;
 	float largeur;
 	float profondeur;
-	int test = 0;
-	int encore = 1;
+	int test = 0;    //prend le role d'un booléen si = 0 alors saisie non valide sinon =1
+	int encore = 1;  //sert a savoir si on continu ou arrete le test joue le role d'un booléen
 
 	while (encore == 1) {
 		printf("Saisir la hauteur : ");
@@ -74,7 +74,7 @@ int main() {
 			}
 		}
 
-		Ordonner(hauteur, profondeur, largeur);
+		Ordonner(hauteur, largeur, profondeur);
 
 		float taille = 55 * 35 * 25;
 		if (largeur * hauteur * profondeur > taille) {
@@ -84,16 +84,17 @@ int main() {
 			printf("/VALIDE/\n");
 		}
 
-		char tmp;
+		
 		printf("Voulez-vous traiter un autre colis?\n [O]ui ou [N]on \n");
 		
-		tmp = (char)toupper(_getch());
+		char tmp = (char)toupper(_getch());
 		
-		if (tmp == 'O') {
-			encore == 1;
-		}
-		else {
-			encore = -1;
+		switch (tmp) {
+		case 'O':
+			break;
+		case 'N':
+			encore = 0;
+			break;
 		}
 
 	}
