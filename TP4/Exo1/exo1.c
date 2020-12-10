@@ -7,7 +7,7 @@ main() {
 	HEURE HeureFin;
 	HEURE Duree = { 00 , 45 };
 
-	int m = (HeureDebut.minute + Duree.minute) / 60; //obtenir les heures qui se rajoute
+	int m = (HeureDebut.minute + Duree.minute) / 60; 
 
 	HeureFin.minute = (HeureDebut.minute + Duree.minute) % 60;
 	HeureFin.heure = HeureDebut.heure + Duree.heure + m;

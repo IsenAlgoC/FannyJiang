@@ -6,11 +6,9 @@
 
 int main() {
 	char nom[TAILLEMOT];
-	char prenom[TAILLEMOT];
-	char sexe[1];
-	
+	char prenom[TAILLEMOT];	
 
-	printf("Entree votre nom : ");// %s pour str sinon %c
+	printf("Entree votre nom : ");
 	scanf_s("%s", nom ,_countof(nom));
 	printf("Entree votre prenom : ");
 	scanf_s("%s", prenom, _countof(prenom));

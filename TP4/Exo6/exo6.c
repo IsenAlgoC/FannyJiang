@@ -27,7 +27,7 @@ int main() {
 		printf("| %d |",tab[i]);
 	}
 
-	int val;              //la valaue que l'on choisi
+	int val;              //la valeur que l'on choisi
 	int* Curseur;          
 	Curseur = &tab[0];
 
