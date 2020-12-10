@@ -8,25 +8,24 @@ int main() {
 	char nom[TAILLEMOT];
 	char prenom[TAILLEMOT];
 	char sexe[1];
-	char H, F, ch;
+	
 
-	printf("Entree votre nom:");// %s pour str sinon %c
-	scanf_s("%s", nom, _countof(nom));
-	printf("Entree votre prenom:");
+	printf("Entree votre nom : ");// %s pour str sinon %c
+	scanf_s("%s", nom ,_countof(nom));
+	printf("Entree votre prenom : ");
 	scanf_s("%s", prenom, _countof(prenom));
-	printf("Entree votre sexe:");
+	printf("Etes-vous un (H)omme ou une (F)emme ?");
 
-	ch = (char)_getch();
-	ch = (char)toupper(ch);
+	char  ch = (char)toupper(_getch());
 
 	switch (ch)
 	{
 	case 'F':
-		printf("Madame %s %s", nom, prenom);
+		printf("\nMadame %s %s", nom, prenom);
+		break;
 	case 'H':
-		printf("Monsieur %s %s", nom, prenom);
+		printf("\nMonsieur %s %s", nom, prenom);
+		break;
 	}
-
-
-
+	return(EXIT_SUCCESS);
 }

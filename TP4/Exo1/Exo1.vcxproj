@@ -142,7 +142,7 @@
     <ClCompile Include="exo1.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="exo1.h" />
+    <ClInclude Include="tp4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
