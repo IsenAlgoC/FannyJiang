@@ -246,16 +246,14 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 							/* tableau, afin de les convertir en majuscules et les comparer */
 	bool trouve = false;
 
-	//pour initialiser tmp_nom
+#ifdef IMPL_TAB
+	// ajouter code ici pour tableau
+
 	strncpy_s(tmp_nom, _countof(tmp_nom), nom, _TRUNCATE);
 		for (int j = 0; j < strlen(tmp_nom); j++) {
 			*(tmp_nom + j) = toupper(*(tmp_nom + j));
 		}
-
-#ifdef IMPL_TAB
-	// ajouter code ici pour tableau
-
-	while ((!trouve) && (i <= ind_fin)) {
+	while ((!trouve) && (i < ind_fin)) {
 
 		strncpy_s(tmp_nom2, _countof(tmp_nom2), rep->tab[i].nom, _TRUNCATE);
 
@@ -271,16 +269,23 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
+	strncpy_s(tmp_nom, _countof(tmp_nom), rep->liste->tail->pers.nom, _TRUNCATE);
+	for (int j = 0; j < strlen(tmp_nom); j++) {
+		*(tmp_nom + j) = toupper(*(tmp_nom + j));
+	}
+
 	SingleLinkedListElem* currentElement = GetElementAt(rep->liste, i);
 	while ((currentElement != NULL) && (!trouve)) {
 
 		strncpy_s(tmp_nom2, _countof(tmp_nom2), currentElement->pers.nom, _TRUNCATE);
+		for (int k = 0; k < strlen(tmp_nom2); k++) {
+			*(tmp_nom2 + k) = toupper(*(tmp_nom2 + k));
+		}
 				
 		if (strcmp(tmp_nom, tmp_nom2) == 0) {
 			trouve = true;
 		}
 		else {
-			// si pas trouvé, on passe au suivant
 			currentElement = currentElement->next;
 			i++;
 		}
@@ -289,7 +294,7 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 #endif
 #endif
 
-	return((trouve) ? (i - 1) : -1);
+	return((trouve) ? i : -1);
 } /* fin rechercher_nom */
 
   /*********************************************************************/
