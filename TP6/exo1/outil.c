@@ -65,7 +65,7 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 				return(OK);
 			}
 		}
-		if (i == rep->nb_elts) { // si l'élement est doit etre placer en queue
+		if (i == rep->nb_elts) { // si l'élement doit etre placer en queue
 			InsertElementAt(rep->liste, i, enr);
 			modif = true;
 			rep->est_trie = true;
@@ -427,20 +427,20 @@ int charger(Repertoire* rep, char nom_fichier[])
 				}
 #else
 #ifdef IMPL_LIST
-														// ajouter code implemention liste
-				/*SingleLinkedListElem* tmp = GetElementAt(rep->liste ,num_rec);
+													 /*ajouter code implemention liste*/
+				//Solution non trouver
 
+				/*SingleLinkedListElem* tmp = GetElementAt(rep->liste ,num_rec);
 				if (lire_champ_suivant(buffer, &idx, tmp->pers.nom, MAX_NOM, SEPARATEUR) == OK)
 				{
-					idx++;							
+					idx++;
 					if (lire_champ_suivant(buffer, &idx, tmp->pers.prenom, MAX_NOM, SEPARATEUR) == OK)
 					{
 						idx++;
 						if (lire_champ_suivant(buffer, &idx, tmp->pers.tel, MAX_TEL, SEPARATEUR) == OK)
-							num_rec++;		
+							num_rec++;
 					}
-				}
-				tmp = tmp->next;*/
+				}*/
 #endif
 #endif
 
