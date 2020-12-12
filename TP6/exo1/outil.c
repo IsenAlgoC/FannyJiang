@@ -46,23 +46,31 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 			rep->nb_elts += 1;
 			modif = true;
 			rep->est_trie = true;
+			inserted = true;
 			return(OK);
 		}
 
 	}
 	else {
+		SingleLinkedListElem* tmp;
 		int i = 0;
-		SingleLinkedListElem* tmp = rep->liste->head;
-
-		while (est_sup(tmp->pers,enr) && i < rep->nb_elts) {
-			tmp = tmp->next;
-			i++;
+		for (i; i < rep->nb_elts; i++) {    //si l'élement peut etre placer dans le milieu de la liste
+			tmp = GetElementAt(rep->liste,i);
+			if (est_sup(tmp->pers, enr) == false) {
+				InsertElementAt(rep->liste, i, enr);
+				modif = true;
+				rep->est_trie = true;
+				rep->nb_elts += 1;
+				inserted = true;
+				return(OK);
+			}
 		}
-
-		if (InsertElementAt(rep->liste, i, enr)) {
+		if (i == rep->nb_elts) { // si l'élement est doit etre placer en queue
+			InsertElementAt(rep->liste, i, enr);
 			modif = true;
 			rep->est_trie = true;
 			rep->nb_elts += 1;
+			inserted = true;
 			return(OK);
 		}
 	}
@@ -169,8 +177,8 @@ bool est_sup(Enregistrement enr1, Enregistrement enr2) {
 	// code à compléter ici
 
 	if (strcoll(enr1.nom, enr2.nom) < 0) {    // si enr1<enr2 alors return val neg sinon positif et si egaux alors return 0 
-		return (true);
-	}
+		return (true);							// strcoll -> comme strlen mais prend en compte les majuscule et minuscule
+	}							
 	else {
 		if (strcoll(enr1.nom, enr2.nom) == 0) {
 			if (strcoll(enr1.prenom, enr2.prenom) < 0) {
@@ -257,7 +265,7 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 
 		strncpy_s(tmp_nom2, _countof(tmp_nom2), rep->tab[i].nom, _TRUNCATE);
 
-		for (int k = 0; k < strlen(tmp_nom2); k++) {
+		for (int k = 0 ; k < strlen(tmp_nom2); k++) {
 			*(tmp_nom2 + k) = toupper(*(tmp_nom2 + k));
 		}
 		if (strcmp(tmp_nom2, tmp_nom) == 0) {
@@ -269,7 +277,8 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
-	strncpy_s(tmp_nom, _countof(tmp_nom), rep->liste->tail->pers.nom, _TRUNCATE);
+	strncpy_s(tmp_nom, _countof(tmp_nom), nom, _TRUNCATE);
+
 	for (int j = 0; j < strlen(tmp_nom); j++) {
 		*(tmp_nom + j) = toupper(*(tmp_nom + j));
 	}
@@ -286,15 +295,15 @@ int rechercher_nom(Repertoire* rep, char nom[], int ind)
 			trouve = true;
 		}
 		else {
-			currentElement = currentElement->next;
-			i++;
+			currentElement = GetElementAt(rep->liste, i + 1);
 		}
+		i++;
 	}
 
 #endif
 #endif
 
-	return((trouve) ? i : -1);
+	return((trouve) ? i - 1 : -1);
 } /* fin rechercher_nom */
 
   /*********************************************************************/
